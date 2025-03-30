@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 
-call plug#begin()
+call plug#begin('~/.config/nvim/bundle')
 
 Plug 'VundleVim/Vundle.vim'
 
