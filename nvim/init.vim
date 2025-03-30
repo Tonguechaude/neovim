@@ -412,7 +412,7 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 
 " Toggle paste mode. Useful when pasting in Windows environnements
-set pastetoggle=<F4>
+" Deprecated /!\ : set pastetoggle=<F4>
 
 " Hide all statusline (Useful for Vimdeck presentations)
 let s:hidden_all = 0
