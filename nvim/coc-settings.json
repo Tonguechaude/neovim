@@ -2,8 +2,6 @@
   "markdownlint.config": {
     "line-length": false
   },
-  "tsserver.tsdk": "/home/stephane/.nvm/versions/node/v18.12.1/lib/node_modules/typescript/lib/",
-  "tsserver.npm": "/home/stephane/.nvm/versions/node/v18.12.1/bin/npm",
   "tsserver.ignoreLocalTsserver": true,
   "languageserver": {
     "go": {

@@ -5,10 +5,8 @@ call plug#begin()
 
 Plug 'VundleVim/Vundle.vim'
 
-" Typescript syntax
-Plug 'leafgarland/typescript-vim'
-" jsx/tsx syntax
-Plug 'peitalin/vim-jsx-typescript'
+" Rust Integration
+Plug 'rust-lang/rust.vim'
 
 " Git Integration
 Plug 'tpope/vim-fugitive'
@@ -41,9 +39,6 @@ Plug 'vim-airline/vim-airline'
 
 " Conquer of Code (Completion and LSP support)
 Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
-
-" Go
-Plug 'fatih/vim-go'
 
 " Ack support
 " Beware ! git.fsck might not like this plugin. Use manual install if needed:
