@@ -3,63 +3,44 @@ filetype off
 
 " Charger Vim-Plug correctement
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+	silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 call plug#begin('~/.config/nvim/bundle')
 
 Plug 'VundleVim/Vundle.vim'
 
-" Rust Integration
-Plug 'rust-lang/rust.vim'
+" Puppet
+Plug 'elzr/vim-json' " For metadata.json
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Install fuzzy finder. Use whatever you prefer for file browsing
+Plug 'junegunn/fzf.vim' " Fuzzy Finder vim plugin
+Plug 'mrk21/yaml-vim' " For hieradata
+Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile'} " Language Server support
+Plug 'rodjek/vim-puppet' " For Puppet syntax highlighting
+Plug 'vim-ruby/vim-ruby' " For Facts, Ruby functions, and custom providers
+Plug 'editorconfig/editorconfig-vim' " .editorconfig support
 
-" Git Integration
-Plug 'tpope/vim-fugitive'
-
-" Advanced Vim Targets (/!\ Will override some basic ones)
-Plug 'wellle/targets.vim'
-
-" Vim Session handling
-Plug 'tpope/vim-obsession'
+Plug 'rust-lang/rust.vim' " Rust Integration
+Plug 'tpope/vim-fugitive' " Git Integration
+Plug 'wellle/targets.vim' " Advanced Vim Targets (/!\ Will override some basic ones)
+Plug 'tpope/vim-obsession' " Vim Session handling
 
 " NERDTree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
 
-" .editorconfig support
-Plug 'editorconfig/editorconfig-vim'
 
-" Indent guide
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides' " Indent guide
+Plug 'terryma/vim-expand-region' " Region Expansion
+Plug 'tpope/vim-surround' " Surrounding plugin (to add quotes/parens/brackets around stuff)
+Plug 'vim-airline/vim-airline' " Best status bar ever
 
-" Region Expansion
-Plug 'terryma/vim-expand-region'
-
-" Surrounding plugin (to add quotes/parens/brackets around stuff)
-Plug 'tpope/vim-surround'
-
-" Best status bar ever
-Plug 'vim-airline/vim-airline'
-
-" Conquer of Code (Completion and LSP support)
-Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
-
-" Ack support
-" Beware ! git.fsck might not like this plugin. Use manual install if needed:
-" git clone --config transfer.fsckobjects=false https://github.com/mileszs/ack.vim.git ~/.vim/bundle/ack.vim
-Plug 'mileszs/ack.vim'
-
-" Better substitution: use S instead of s and never look back !
-Plug 'tpope/vim-abolish'
-
-" Easy motion
-Plug 'easymotion/vim-easymotion'
-
-" Code formatting
-Plug 'sbdchd/neoformat'
+Plug 'tpope/vim-abolish' " Better substitution: use S instead of s and never look back !
+Plug 'easymotion/vim-easymotion' " Easy motion
+Plug 'sbdchd/neoformat' " Code formatting
 
 " Javascript syntax highlighting
 Plug 'pangloss/vim-javascript'
@@ -69,24 +50,11 @@ Plug 'othree/jsdoc-syntax.vim'
 Plug 'aklt/plantuml-syntax'
 let g:plantuml_set_makeprg = 0
 
-" Vimdeck support (see https://github.com/tybenz/vimdeck)
-Plug 'inkarkat/vim-SyntaxRange'
-Plug 'inkarkat/vim-ingo-library'
+Plug 'gioele/vim-autoswap' " Better swap file handling
 
-" Better swap file handling
-Plug 'gioele/vim-autoswap'
+Plug 'mattn/emmet-vim' " Easy HTML writing
 
-" Hashicorp Terraform syntax support
-Plug 'hashivim/vim-terraform'
-
-" Async library for Vim (not required on Vim8 but required on Neovim ?)
-Plug 'Shougo/vimproc.vim'
-
-" Easy HTML writing
-Plug 'mattn/emmet-vim'
-
-" Increment/Decrement in Visual Block mode
-Plug 'vim-scripts/VisIncr'
+Plug 'vim-scripts/VisIncr' " Increment/Decrement in Visual Block mode
 
 " Emoji abbrev
 " Ctrl-X Ctrl-O to trigger autocompletion
@@ -94,9 +62,14 @@ Plug 'vim-scripts/VisIncr'
 Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git'
 
 " AI is Love, AI is Life
-Plug 'nvim-lua/plenary.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'dpayne/CodeGPT.nvim'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'MunifTanjim/nui.nvim'
+"Plug 'dpayne/CodeGPT.nvim'
+
+" Bash support
+Plug 'WolfgangMehner/bash-support'
+
+Plug 'justmao945/vim-clang' " C vim extension
 
 call plug#end()
 
@@ -116,39 +89,39 @@ nmap <silent> gf <Plug>(coc-refactor)
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
+			\ coc#pum#visible() ? coc#pum#next(1) :
+			\ CheckBackspace() ? "\<Tab>" :
+			\ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion
 if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
+	inoremap <silent><expr> <c-space> coc#refresh()
 else
-  inoremap <silent><expr> <c-@> coc#refresh()
+	inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	elseif (coc#rpc#ready())
+		call CocActionAsync('doHover')
+	else
+		execute '!' . &keywordprg . " " . expand('<cword>')
+	endif
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
@@ -299,7 +272,7 @@ set ruler
 set backspace=indent,eol,start
 
 " Display line number relative to the current one
-set relativenumber
+" set relativenumber
 
 " Undo info available across vim instances
 set undofile
@@ -308,7 +281,7 @@ set undofile
 set laststatus=2
 " Display only the beginning of a branch
 function! CustomBranchName(name)
-    return fnamemodify(a:name, ':t')[0:12]
+	return fnamemodify(a:name, ':t')[0:12]
 endfunction
 let g:airline#extensions#branch#format = 'CustomBranchName'
 
@@ -330,7 +303,7 @@ set hlsearch
 set wrap
 set textwidth=0
 set formatoptions=qrn1
-set colorcolumn=85
+"set colorcolumn=85
 
 " Colorscheme
 set t_Co=256
@@ -386,16 +359,16 @@ set updatetime=2000
 set clipboard^=unnamedplus
 " Prevent clipboard clearing on exit or suspend (Ctrl-Z)
 if executable("xsel")
-  function! PreserveClipboard()
-    call system("xsel -ib", getreg('+'))
-  endfunction
-  function! PreserveClipboadAndSuspend()
-    call PreserveClipboard()
-    suspend
-  endfunction
-  autocmd VimLeave * call PreserveClipboard()
-  nnoremap <silent> <c-z> :call PreserveClipboadAndSuspend()<cr>
-  vnoremap <silent> <c-z> :<c-u>call PreserveClipboadAndSuspend()<cr>
+	function! PreserveClipboard()
+		call system("xsel -ib", getreg('+'))
+	endfunction
+	function! PreserveClipboadAndSuspend()
+		call PreserveClipboard()
+		suspend
+	endfunction
+	autocmd VimLeave * call PreserveClipboard()
+	nnoremap <silent> <c-z> :call PreserveClipboadAndSuspend()<cr>
+	vnoremap <silent> <c-z> :<c-u>call PreserveClipboadAndSuspend()<cr>
 endif
 
 " Easymotion configuration
@@ -417,21 +390,21 @@ let g:EasyMotion_smartcase = 1
 " Hide all statusline (Useful for Vimdeck presentations)
 let s:hidden_all = 0
 function! ToggleHiddenAll()
-    if s:hidden_all  == 0
-        let s:hidden_all = 1
-        set noshowmode
-        set noruler
-        set laststatus=0
-        set noshowcmd
+	if s:hidden_all  == 0
+		let s:hidden_all = 1
+		set noshowmode
+		set noruler
+		set laststatus=0
+		set noshowcmd
 		set shortmess+=F
-    else
-        let s:hidden_all = 0
-        set showmode
-        set ruler
-        set laststatus=2
-        set showcmd
+	else
+		let s:hidden_all = 0
+		set showmode
+		set ruler
+		set laststatus=2
+		set showcmd
 		set shortmess-=F
-    endif
+	endif
 endfunction
 
 nnoremap <LEADER><S-h> :call ToggleHiddenAll()<CR>
@@ -439,8 +412,8 @@ nnoremap <LEADER><S-h> :call ToggleHiddenAll()<CR>
 
 " ripgrep support
 if executable("rg")
-  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden
-  set grepformat=%f:%l:%c:%m
+	set grepprg=rg\ --vimgrep\ --smart-case\ --hidden
+	set grepformat=%f:%l:%c:%m
 endif
 
 " Nvim only: create a dynamic split to view RegEx in real time
@@ -505,10 +478,10 @@ endif
 " vim-emmet configuration
 let g:user_emmet_leader_key='<Tab>'
 let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
+			\  'javascript.jsx' : {
+			\      'extends' : 'jsx',
+			\  },
+			\}
 
 " Enable vim-emoji-ab
 " /!\ Additionnal steps needed, see: https://gitlab.com/gi1242/vim-emoji-ab
@@ -517,3 +490,6 @@ au FileType markdown,asciidoc,html runtime macros/emoji-ab.vim
 
 " Explain Rust errors
 autocmd FileType rust nnoremap <LEADER>e :call CocCommand('rust-analyzer.explainError')<CR>
+
+set statusline+=%{coc#status()}
+
